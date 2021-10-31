@@ -12,7 +12,9 @@ body {
 	font-family: "Arial", sans-serif;
 }
 .sliders {
-	display: inline-grid;
-	grid-column-gap: 10px;
-	grid-template-columns: 1fr 1fr 1fr 1fr;
+	display: flex;
+	justify-content: center;
+}
+.space {
+	padding:5px;
 }

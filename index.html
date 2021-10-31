@@ -7,13 +7,22 @@
 	</head>
 	<body>
 		<h1>Minesweeper</h1>
+		<canvas id="topZone" width="500" height="30" oncontextmenu="return false;"></canvas>
+		
 		<canvas id="myCanvas" width="500" height="500" oncontextmenu="return false;"></canvas>
 			<p>Difficulty</p>
 			<div class="sliders">
 				<button type="button" id="easy" name="easy">easy</button>
+				<div class="space"></div>
 				<button type="button" id="normal" name="normal">normal</button>
+				<div class="space"></div>
 				<button type="button" id="hard" name="hard">hard</button>
+				<div class="space"></div>
 				<button type="button" id="expert" name="expert">expert</button>
+			</div>
+			<div class="space"></div>
+			<div class="sliders">
+				<button type="button" id="reset" name="reset">restart</button>
 			</div>
 		<script src="./script.js"></script>
 	</body>
