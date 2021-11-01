@@ -1,20 +1,107 @@
-* { 
-	padding: 0;
+@font-face{
+	font-family: "NotoSans";
+	src: url('./fonts/NotoSans-Regular.ttf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
+}
+@font-face{
+	font-family: "NotoSans";
+	src: url('./fonts/NotoSans-Italic.ttf') format('truetype');
+	font-weight: 400;
+	font-style: italic;
+}
+@font-face{
+	font-family: "NotoSans";
+	src: url('./fonts/NotoSans-Bold.ttf') format('truetype');
+	font-weight: 700;
+	font-style: normal;
+}
+body{
 	margin: 0;
+	background-color: #e6e0df;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+.topnav{
+	overflow: hidden;
+	background-color: #cc7647;
+	filter: drop-shadow(0px 3px 0px #b3673e)
+}
+.topnav ul{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	top: 0;
+	width: 100%;
+}
+.topnav a{
+	float: left;
+	color: #262220;
+	font-family: "NotoSans";
+	font-weight: 700;
+	font-style: normal;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	font-size: 17px;
+}
+.topnav a:hover{
+	background-color: #ba6c41;
+}
+.homeContent{
+	padding-left: 16px;
+}
+.homeContent h1, h4{
+	color: #725a5a;
+	font-family: "NotoSans";
+	font-weight: 700;
+	font-style: normal;
 	text-align: center;
 }
-canvas { 
-	background: #eee;
+.homeText{
+	justify-content: center;
+	display: flex;
+	flex-basis: 1 1 auto;
+	background-color: #c3a6a0;
+	border-radius: 25px;
+	margin-left: 30%;
+	margin-right: 30%;
+	padding: 1px;
+	margin-bottom: 10px;
+	filter: drop-shadow(0px 7px 0px #a68d88);
+}
+.homeText img{
+	max-height: 100px;
+	margin-top: auto;
+	margin-bottom: auto;
+	padding-right: 22px;	
+}
+.homeSpace{
+	margin: 5px;
+}
+.homeContent p, a, li, footer{
+	font-family: "NotoSans";
+	font-weight: 400;
+	font-style: normal;
+	padding: 0px 20px;
+}
+.homeContent h3{
+	font-family: "NotoSans";
+	font-weight: 700;
+	font-style: normal;
+	margin-bottom: 5px;
+	padding: 0px 20px;
+}
+footer{
+	margin-top: auto;
+	text-align: center;
+	font-size: 12px;
+	background-color: #e6e0df;
+}
+canvas{
+	padding: 0;
+	margin: 0 auto;
 	display: block;
 	margin: 0 auto;
-}
-body {
-	font-family: "Arial", sans-serif;
-}
-.sliders {
-	display: flex;
-	justify-content: center;
-}
-.space {
-	padding:5px;
 }

@@ -6,24 +6,37 @@
 		 <link rel="stylesheet" href="./style.css">
 	</head>
 	<body>
+		<div class="topnav">
+			<ul>
+				<li><a href="./index.html">Home</a></li>
+				<li><a href="./projects.html">Projects</a></li>
+				<li><a href="./about.html">About</a></li>
+			</ul>
+		</div>
+		<div class="homeContent">
 		<h1>Minesweeper</h1>
-		<canvas id="topZone" width="500" height="30" oncontextmenu="return false;"></canvas>
-		
-		<canvas id="myCanvas" width="500" height="500" oncontextmenu="return false;"></canvas>
-			<p>Difficulty</p>
-			<div class="sliders">
-				<button type="button" id="easy" name="easy">easy</button>
-				<div class="space"></div>
-				<button type="button" id="normal" name="normal">normal</button>
-				<div class="space"></div>
-				<button type="button" id="hard" name="hard">hard</button>
-				<div class="space"></div>
-				<button type="button" id="expert" name="expert">expert</button>
+			<div class="mineBoard">
+				<canvas id="topZone" width="500" height="30" oncontextmenu="return false;"></canvas>
+				<canvas id="myCanvas" width="500" height="500" oncontextmenu="return false;"></canvas>
 			</div>
-			<div class="space"></div>
-			<div class="sliders">
-				<button type="button" id="reset" name="reset">restart</button>
-			</div>
-		<script src="./script.js"></script>
+				<h4>Difficulty</h4>
+				<div class="homeText">
+					<button type="button" id="easy" name="easy">easy</button>
+					<div class="homeSpace"></div>
+					<button type="button" id="normal" name="normal">normal</button>
+					<div class="homeSpace"></div>
+					<button type="button" id="hard" name="hard">hard</button>
+					<div class="homeSpace"></div>
+					<button type="button" id="expert" name="expert">expert</button>
+				</div>
+				<div class="homeSpace"></div>
+				<div class="homeText">
+					<button type="button" id="reset" name="reset">restart</button>
+				</div>
+			<script src="./script.js"></script>
+		</div>
+		<footer>
+			<p>Matthew Flammia<br><a href="mailto:matthewflammia@aol.com">matthewflammia@aol.com</a></p>
+		</footer>
 	</body>
 </html>
