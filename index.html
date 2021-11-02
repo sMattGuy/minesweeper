@@ -21,16 +21,28 @@
 			</div>
 				<h4>Difficulty</h4>
 				<div class="homeText">
+					<div style="padding:5px;">
 					<button type="button" id="easy" name="easy">easy</button>
-					<div class="homeSpace"></div>
 					<button type="button" id="normal" name="normal">normal</button>
-					<div class="homeSpace"></div>
 					<button type="button" id="hard" name="hard">hard</button>
+					<button type="button" id="custom" name="custom">custom</button>
+					</div>
+				</div>
+				<div class="homeText" id="customInput" style="display: none;">
+					<div style="padding:5px;margin-left:16px;">
+						<input type="text" id="cusHeight" placeholder="height">
+						<input type="text" id="cusWidth" placeholder="width">
+						<input type="text" id="cusBomb" placeholder="bombs">
+					</div>
 					<div class="homeSpace"></div>
-					<button type="button" id="expert" name="expert">expert</button>
-				</div>	
+					<div style="padding:5px;margin-right:16px;">
+						<button type="button" id="createCustom" name="startCustom">Start!</button>
+					</div>
+				</div>
 				<div class="homeText">
+					<div style="padding:5px;">
 					<button type="button" id="reset" name="reset">restart</button>
+					</div>
 				</div>
 				<div class="homeText">
 					<a href="../games.html" style="margin:0 auto;display:block;">Return to Games</a>

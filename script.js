@@ -46,8 +46,17 @@ let topCtx = topCanvas.getContext("2d");
 let easyButton = document.getElementById("easy");
 let normalButton = document.getElementById("normal");
 let hardButton = document.getElementById("hard");
-let expertButton = document.getElementById("expert");
+let customButton = document.getElementById("custom");
 let restartButton = document.getElementById("reset");
+
+//custom game
+let customHeight = document.getElementById("cusHeight");
+let customWidth = document.getElementById("cusWidth");
+let cusBombs = document.getElementById("cusBomb");
+let cusStart = document.getElementById("createCustom");
+
+//div
+let customDiv = document.getElementById("customInput");
 
 //tile size
 let TILESIZE = 20;
@@ -68,14 +77,16 @@ topCanvas.height = TILESIZE*2;
 let mousePosx = 0;
 let mousePosy = 0;
 
-let lastClickX = -1;
-let lastClickY = -1;
-let lastPress = -1;
+let lastClickX = 0;
+let lastClickY = 0;
+let lastPress = 0;
 
 let gameActive = true;
 let result = false;
 let firstClick = true;
 let timer = 0;
+
+let creationAttempts = 0;
 
 canvas.addEventListener('mousemove', e=>{
 	if(gameActive){
@@ -106,20 +117,24 @@ canvas.addEventListener('mouseup', e => {
 	if(gameActive){
 		let currentX = Math.floor(e.offsetX/TILESIZE);
 		let currentY = Math.floor(e.offsetY/TILESIZE);
-		if(firstClick){
-			while(board[currentX][currentY].value != 0){
-				createBoard(boardLength, boardWidth, bombs);
+		if(currentX >= 0 && currentY >= 0){
+			if(firstClick){
+				while(board[currentX][currentY].value != 0 && creationAttempts < 10){
+					creationAttempts++;
+					createBoard(boardLength, boardWidth, bombs);
+				}
+				creationAttempts = 0;
+				firstClick = false;
 			}
-			firstClick = false;
-		}
-		if(currentX == lastClickX && currentY == lastClickY){
-			board[currentX][currentY].clickHeld = 0;
-			if(lastPress == 0 && board[currentX][currentY].flag == 0){
-				clickSpace(currentX, currentY);
+			if(currentX == lastClickX && currentY == lastClickY){
+				board[currentX][currentY].clickHeld = 0;
+				if(lastPress == 0 && board[currentX][currentY].flag == 0){
+					clickSpace(currentX, currentY);
+				}
 			}
-		}
-		else{
-			board[lastClickX][lastClickY].clickHeld = 0;
+			else{
+				board[lastClickX][lastClickY].clickHeld = 0;
+			}
 		}
 		resetClicked();
 	}
@@ -131,25 +146,27 @@ canvas.addEventListener('mousedown', e => {
 		lastClickX = Math.floor(e.offsetX/TILESIZE);
 		lastClickY = Math.floor(e.offsetY/TILESIZE);
 		lastPress = e.button;
-		if(e.button == 2){
-			//right click place flag
-			if(board[lastClickX][lastClickY].hidden == 1){
-				board[lastClickX][lastClickY].flag = (board[lastClickX][lastClickY].flag + 1) % 2;
-				if(board[lastClickX][lastClickY].flag == 0){
-					bombsLeft++;
+		if(lastClickX >= 0 && lastClickY >= 0){
+			if(e.button == 2){
+				//right click place flag
+				if(board[lastClickX][lastClickY].hidden == 1){
+					board[lastClickX][lastClickY].flag = (board[lastClickX][lastClickY].flag + 1) % 2;
+					if(board[lastClickX][lastClickY].flag == 0){
+						bombsLeft++;
+					}
+					else{
+						bombsLeft--;
+					}
+				}
+			}
+			else if(e.button == 0){
+				//left click
+				if(board[lastClickX][lastClickY].hidden == 1){
+					board[lastClickX][lastClickY].clickHeld = 1;
 				}
 				else{
-					bombsLeft--;
+					markSurrounding(lastClickX,lastClickY);
 				}
-			}
-		}
-		else if(e.button == 0){
-			//left click
-			if(board[lastClickX][lastClickY].hidden == 1){
-				board[lastClickX][lastClickY].clickHeld = 1;
-			}
-			else{
-				markSurrounding(lastClickX,lastClickY);
 			}
 		}
 	}
@@ -157,6 +174,7 @@ canvas.addEventListener('mousedown', e => {
 });
 
 easyButton.onclick = function(){
+	customDiv.style.display = 'none';
 	resetting = 1;
 	boardLength = 9;
 	boardWidth = 9;
@@ -168,6 +186,7 @@ easyButton.onclick = function(){
 	createBoard(boardLength, boardWidth, bombs);
 };
 normalButton.onclick = function(){
+	customDiv.style.display = 'none';
 	boardLength = 16;
 	boardWidth = 16;
 	bombs = 40;
@@ -178,6 +197,7 @@ normalButton.onclick = function(){
 	createBoard(boardLength, boardWidth, bombs);
 };
 hardButton.onclick = function(){
+	customDiv.style.display = 'none';
 	boardLength = 30;
 	boardWidth = 16;
 	bombs = 99;
@@ -187,19 +207,53 @@ hardButton.onclick = function(){
 	topCanvas.width = TILESIZE*boardLength;
 	createBoard(boardLength, boardWidth, bombs);
 };
-expertButton.onclick = function(){
-	boardLength = 50;
-	boardWidth = 30;
-	bombs = 250;
-	bombsLeft = 250;
-	canvas.width = TILESIZE*boardLength;
-	canvas.height = TILESIZE*boardWidth;
-	topCanvas.width = TILESIZE*boardLength;
-	createBoard(boardLength, boardWidth, bombs);
+customButton.onclick = function(){
+	customDiv.style.display = 'flex';
 };
+
 restartButton.onclick = function(){
 	createBoard(boardLength, boardWidth, bombs);
 };
+
+cusStart.onclick = function(){
+	let cusHeightVal = parseInt(customHeight.value);
+	let cusWidthVal = parseInt(customWidth.value);
+	let cusBombVal = parseInt(cusBombs.value);
+	let maxBombPossible = cusHeightVal * cusWidthVal;
+	
+	let valid = true;
+	if(isNaN(cusHeightVal) || cusHeightVal <= 0 || cusHeightVal > 30){
+		customHeight.style.border = '1px solid #FF0000';
+		valid = false;
+	}
+	if(isNaN(cusWidthVal) || cusWidthVal <= 0 || cusWidthVal > 24){
+		customWidth.style.border = '1px solid #FF0000';
+		valid = false;
+	}
+	if(isNaN(cusBombVal) || cusBombVal <= 0 || maxBombPossible <= cusBombVal || cusBombVal > 668){
+		cusBombs.style.border = '1px solid #FF0000';
+		valid = false;
+	}
+	if(valid){
+		customHeight.style.border = '1px solid #00FF00';
+		customWidth.style.border = '1px solid #00FF00';
+		cusBombs.style.border = '1px solid #00FF00';
+		
+		boardLength = cusHeightVal;
+		boardWidth = cusWidthVal;
+		bombs = cusBombVal;
+		bombsLeft = bombs;
+		canvas.width = TILESIZE*boardLength;
+		canvas.height = TILESIZE*boardWidth;
+		topCanvas.width = TILESIZE*boardLength;
+		createBoard(boardLength, boardWidth, bombs);
+	}
+	else{
+		
+	}
+}
+
+
 let lastTime = Date.now();
 async function runClock(){
 	if(!firstClick && gameActive){

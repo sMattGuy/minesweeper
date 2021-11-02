@@ -62,7 +62,6 @@ body{
 .homeText{
 	justify-content: center;
 	display: flex;
-	flex-basis: 1 1 auto;
 	background-color: #c3a6a0;
 	border-radius: 25px;
 	margin-left: 25%;
