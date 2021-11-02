@@ -17,6 +17,8 @@ let bombTile = new Image();
 bombTile.src = './img/bomb.png';
 let flagTile = new Image();
 flagTile.src = './img/flag.png';
+let wrongFlag = new Image();
+wrongFlag.src = './img/flagWrong.png';
 let tile = new Image();
 tile.src = './img/unclicked.png';
 
@@ -306,7 +308,7 @@ function init(){
 function draw(){
 	//top zone
 	topCtx.fillStyle = '#eee';
-	topCtx.fillRect(0,0,TILESIZE*boardLength,TILESIZE*boardWidth);
+	topCtx.fillRect(0,0,TILESIZE*boardLength,TILESIZE*2);
 	//bombs
 	let currentBombs = bombsLeft;
 	let oneDigit = currentBombs%10;
@@ -364,25 +366,41 @@ function draw(){
 	else{
 		if(result){
 			//winner!
-			ctx.fillStyle = 'rgba(0,255,0,0.5)';
+			ctx.fillStyle = 'rgba(0,255,0,0.25)';
 			ctx.fillRect(0,0,TILESIZE*boardLength,TILESIZE*boardWidth);
 			
-			ctx.fillStyle = 'black';
-			ctx.font = `${boardLength*(TILESIZE/8)}px Lucida Console`;
+			topCtx.fillStyle = 'black';
+			topCtx.font = `${topCanvas.height/3}px Lucida Console`;
 			let text = 'You Win!';
-			ctx.textAlign = 'center';
-			ctx.fillText(text,(TILESIZE*boardLength)/2,(TILESIZE*boardWidth)/2);
+			topCtx.textAlign = 'center';
+			topCtx.fillText(text,topCanvas.width/2,topCanvas.height/2 + 5);
 		}
 		else{
 			//loss
-			ctx.fillStyle = 'rgba(255,0,0,0.5)';
-			ctx.fillRect(0,0,TILESIZE*boardLength,TILESIZE*boardWidth);
-			
-			ctx.fillStyle = 'black';
-			ctx.font = `${boardLength*(TILESIZE/8)}px Lucida Console`;
+			for(let i=0;i<boardLength;i++){
+				for(let j=0;j<boardWidth;j++){
+					if(board[i][j].flag == 1 && board[i][j].bomb == 1){
+						ctx.drawImage(flagTile,i*TILESIZE,j*TILESIZE,TILESIZE,TILESIZE);
+					}
+					else if(board[i][j].flag == 1){
+						ctx.drawImage(wrongFlag,i*TILESIZE,j*TILESIZE,TILESIZE,TILESIZE);
+					}
+					else if(board[i][j].bomb == 1){
+						ctx.drawImage(bombTile,i*TILESIZE,j*TILESIZE,TILESIZE,TILESIZE);
+					}
+					else if(board[i][j].hidden == 1){
+						ctx.drawImage(tile,i*TILESIZE,j*TILESIZE,TILESIZE,TILESIZE);
+					}
+					else{
+						ctx.drawImage(tileValues[board[i][j].value],i*TILESIZE,j*TILESIZE,TILESIZE,TILESIZE);
+					}
+				}
+			}
+			topCtx.fillStyle = 'black';
+			topCtx.font = `${topCanvas.height/3}px Lucida Console`;
 			let text = 'Game Over!';
-			ctx.textAlign = 'center';
-			ctx.fillText(text,(TILESIZE*boardLength)/2,(TILESIZE*boardWidth)/2);
+			topCtx.textAlign = 'center';
+			topCtx.fillText(text,topCanvas.width/2,topCanvas.height/2 + 5);
 		}
 	}
 }
